@@ -1,0 +1,132 @@
+[
+  {
+    "Key": "",
+    "Title": "Reports",
+    "Icon": "icon-admin",
+    "Roles": null,
+    "Childs": [
+      {
+        "Key": "",
+        "Title": "Test1",
+        "Controller": "XXXX222",
+        "Action": "",
+        "Icon": "",
+        "Roles": null,
+        "Childs": null
+      }
+    ]
+  },
+  {
+    "Key": "",
+    "Title": "CSD",
+    "Icon": "icon-csd",
+    "Roles": null,
+    "Childs": [
+      {
+        "Key": "lbl_CustomerAdministration",
+        "Title": "Customer Administration",
+        "Controller": "CustManage",
+        "Action": "CustInfoList",
+        "Icon": "",
+        "Roles": null,
+        "Childs": null
+      }
+    ]
+  },
+  {
+    "Key": "lbl_Finance",
+    "Title": "Finance",
+    "Icon": "icon-finance",
+    "Roles": null,
+    "Childs": [
+      {
+        "Key": "lbl_BankCardList",
+        "Title": "Bank Card List",
+        "Controller": "BankInfo",
+        "Action": "BankInfoList",
+        "Icon": "",
+        "Roles": null,
+        "Childs": null
+      },
+      {
+        "Key": "lbl_AddBankCard",
+        "Title": "Add Bank Card",
+        "Controller": "BankInfo",
+        "Action": "AddBankInfo",
+        "Icon": "",
+        "Roles": null,
+        "Childs": null
+      },
+      {
+        "Key": "lbl_DepositRequest",
+        "Title": "Deposit Request",
+        "Controller": "Deposit",
+        "Action": "DepositList",
+        "Icon": "",
+        "Roles": null,
+        "Childs": null
+      },
+      {
+        "Key": "lbl_WithdrawalRequest",
+        "Title": "Withdrawal Request",
+        "Controller": "Withdrawal",
+        "Action": "WithdrawalList",
+        "Icon": "",
+        "Roles": null,
+        "Childs": null
+      },
+      {
+        "Key": "",
+        "Title": "Pending Funds",
+        "Controller": "PendingFund",
+        "Action": "Index",
+        "Icon": "",
+        "Roles": null,
+        "Childs": null
+      }
+    ]
+  },
+  {
+    "Key": "lbl_Administration",
+    "Title": "Administration",
+    "Icon": "icon-reports",
+    "Roles": null,
+    "Childs": [
+      {
+        "Key": "lbl_AddAccount",
+        "Title": "Add Account",
+        "Controller": "Admin",
+        "Action": "AddAccount",
+        "Icon": "",
+        "Roles": null,
+        "Childs": null
+      },
+      {
+        "Key": "lbl_AccountList",
+        "Title": "Account List",
+        "Controller": "Admin",
+        "Action": "AccountList",
+        "Icon": "",
+        "Roles": null,
+        "Childs": null
+      }
+    ]
+  },
+  {
+    "Key": "Marketing",
+    "Title": "Marketing",
+    "Icon": "icon-finance",
+    "Roles": null,
+    "Childs": [
+      {
+        "Key": "PointLevelManagement",
+        "Title": "Point Level Management",
+        "Controller": "Marketing",
+        "Action": "PointLevelManagement",
+        "Icon": "",
+        "Roles": null,
+        "Childs": null
+      }
+    ]
+  }
+]

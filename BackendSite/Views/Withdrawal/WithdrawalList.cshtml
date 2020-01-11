@@ -1,0 +1,72 @@
+﻿@using Microsoft.AspNetCore.Hosting
+@using BackendSite.Service.BLL
+@using BackendSite.Service.Model
+@inject IWebHostEnvironment environment
+@inject SelLangBLL selLangBLL
+@inject ServerInfoBLL serverInfoBLL
+@inject AuthorizeBLL authorizeBLL
+@section Style {
+    <link href="~/css/Oneworks/system_style.css" rel="stylesheet" asp-append-version="true"/>
+    <link href="~/lib/Oneworks/jscalendar/calendar-blue.css" rel="stylesheet" />
+}
+@{
+    Layout = "~/Views/Shared/_LayoutReactJs.cshtml";
+    ViewData["Title"] = @selLangBLL.GetResourceValue("lbl_WithdrawalRequest");
+}
+@{
+    var serverInfo = serverInfoBLL.GetServerInfo();
+    var i18n = new Dictionary<string, string>();
+
+    foreach (var currency in serverInfo.ICurrencyList)
+    {
+        if (!i18n.ContainsKey($"lbl_Currency{currency}"))
+            i18n.Add($"lbl_Currency{currency}", selLangBLL.GetResourceValue($"Currency_{currency}"));
+    }
+
+    i18n.Add("lbl_Pending", selLangBLL.GetResourceValue("lbl_Pending"));
+    i18n.Add("lbl_Approved", selLangBLL.GetResourceValue("lbl_Approved"));
+
+    string[] lbl_Txts = new string[] { "lbl_Action", "lbl_Comment", "lbl_ActualDeposit", "lbl_No", "lbl_WithdrawalId", "lbl_WithdrawalType", "lbl_UserName", "lbl_Amount", "lbl_ChargeFee", "lbl_Memo", "lbl_CreateTime", "lbl_Status" };
+    foreach (var lbl_Txt in lbl_Txts)
+    {
+        if (!i18n.ContainsKey(lbl_Txt))
+            i18n.Add(lbl_Txt, selLangBLL.GetResourceValue(lbl_Txt));
+    }
+
+    for (int i = 0; i <= 7; i++)
+    {
+        if (!i18n.ContainsKey($"lbl_WithdrawalStatus{i}"))
+            i18n.Add($"lbl_WithdrawalStatus{i}", selLangBLL.GetResourceValue($"lbl_WithdrawalStatus{i}"));
+    }
+    i18n.Add($"lbl_WithdrawalStatus{99}", selLangBLL.GetResourceValue($"lbl_WithdrawalStatus{99}"));
+
+    for (int i = 0; i <= 2; i++)
+    {
+        if (!i18n.ContainsKey($"lbl_WithdrawalType{i}"))
+            i18n.Add($"lbl_WithdrawalType{i}", selLangBLL.GetResourceValue($"lbl_WithdrawalType{i}"));
+    }
+
+}
+<h4>@selLangBLL.GetResourceValue("lbl_WithdrawalRequest")</h4>
+<hr />
+<div id="searchForm"></div>
+@section Scripts {
+    <script src="~/lib/runtime.min.js"></script>
+    <script src="~/lib/clipboard.min.js"></script>
+    <script src="~/lib/Oneworks/jscalendar/calendar.js"></script>
+    <script src="~/lib/Oneworks/jscalendar/lang/calendar-en.js"></script>
+    <script src="~/lib/Oneworks/jscalendar/calendar-setup.js"></script>
+    <script type="text/javascript">
+        $.extend(i18n, @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(i18n)));
+        var CurrencyList = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(serverInfo.ICurrencyList));
+    </script>
+    <script src="~/js/component/Withdrawal/WithdrawalList.min.js" asp-append-version="true"></script>
+    @if (environment.EnvironmentName == "Development")
+    {
+
+    }
+    else
+    {
+
+    }
+}
