@@ -55,5 +55,23 @@ namespace BackendSite.Service.DAL
                 return conn.Execute("PointLevelInfo_Set", param, commandType: CommandType.StoredProcedure) > 0;
             }
         }
+
+        public PointLevelInfo GetPointLevelInfo(int siteId, int currencyId, int point)
+        {
+            using (MySqlConnection conn = new MySqlConnection(configuration.GetConnectionString("ConnectionString")))
+            {
+                return conn.QueryFirstOrDefault<PointLevelInfo>("PointLevelInfoDetail_Get", new { SiteId = siteId, CurrencyId = currencyId, PointLevel = point }, commandType: CommandType.StoredProcedure);
+            }
+        }
+
+        public int DeletePointLevelInfo(PointLevelInfo pointLevelInfo)
+        {
+            using (MySqlConnection conn = new MySqlConnection(configuration.GetConnectionString("ConnectionString")))
+            {
+                return conn.Execute("PointLevelInfo_Del",
+                                                new { SiteId = pointLevelInfo.SiteId, CurrencyId = pointLevelInfo.CurrencyId, PointLevel = pointLevelInfo.PointLevel },
+                                                commandType: CommandType.StoredProcedure);
+            }
+        }
     }
 }

@@ -25,15 +25,14 @@
   "dependencies": {
     "axios": "^0.19.1",
     "calendar": "^0.1.1",
-    "i18": "0.0.6",
-    "lodash": "^4.17.15",
+    "install": "^0.13.0",
     "moment": "^2.24.0",
-    "numeral": "^2.0.6",
+    "npm": "^6.13.6",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-loading-overlay": "^1.0.1",
-    "react-numeric-textbox": "^1.0.7",
-    "react-spinners": "^0.8.0",
-    "semantic-ui-react": "^0.88.2"
+    "semantic-ui-react": "^0.88.2",
+    "sweetalert2": "^9.5.4",
+    "sweetalert2-react-content": "^2.0.2"
   }
 }

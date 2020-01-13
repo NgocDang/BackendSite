@@ -4,9 +4,23 @@
     Layout = "~/Views/Shared/_LayoutReactJs.cshtml";
     ViewData["Title"] = "Point level management";
 }
+<link href="~/css/main.css" rel="stylesheet" />
 <link href="~/css/marketing.css" rel="stylesheet" />
+@{
+    var i18n = new Dictionary<string, string>();
+
+    for (var currency = 1; currency <= 51; currency++)
+    {
+        if (!string.IsNullOrEmpty(selLangBLL.GetResourceValue($"Currency_{currency}")))
+            i18n.Add($"lbl_Currency{currency}", selLangBLL.GetResourceValue($"Currency_{currency}"));
+    }
+}
 <div id="point-management">
 </div>
 @section Scripts {
     <script src="~/js/component/Marketing/PointLevelList.min.js"></script>
+    <script type="text/javascript">
+        $('.collapse').collapse();
+        $.extend(i18n, @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(i18n)));
+    </script>
 }

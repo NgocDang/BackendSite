@@ -67,7 +67,7 @@ namespace BackendSite.Controllers.Api
         [HttpPost]
         public ApiResult AddPointLevelInfo(PointLevelInfo pointLevelInfo)
         {
-            bool result = marketingBLL.AddPointLevel(pointLevelInfo);
+            var result = marketingBLL.AddPointLevel(pointLevelInfo);
             var apiResult = new ApiResult();
             if (result)
             {
@@ -85,9 +85,27 @@ namespace BackendSite.Controllers.Api
         [HttpPost]
         public ApiResult EditPointLevelInfo(PointLevelInfo pointLevelInfo)
         {
-            bool result = marketingBLL.EditPointLevel(pointLevelInfo);
+            var result = marketingBLL.EditPointLevel(pointLevelInfo);
             var apiResult = new ApiResult();
             if (result)
+            {
+                apiResult.ErrorCode = 0;
+                apiResult.Message = selLangBLL.GetMsg("msg_Updatesuccessful");
+            }
+            else
+            {
+                apiResult.ErrorCode = 9;
+                apiResult.Message = selLangBLL.GetMsg("msg_UpdateFailed");
+            }
+            return apiResult;
+        }
+
+        [HttpPost]
+        public ApiResult DeletePointLevelInfo(PointLevelInfo pointLevelInfo)
+        {
+            var result = marketingBLL.DeletePointLevel(pointLevelInfo);
+            var apiResult = new ApiResult();
+            if (result > 0)
             {
                 apiResult.ErrorCode = 0;
                 apiResult.Message = selLangBLL.GetMsg("msg_Updatesuccessful");
