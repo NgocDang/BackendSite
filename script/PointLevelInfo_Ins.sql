@@ -22,5 +22,5 @@ BEGIN
 			WHERE
 				PointLevelInfo.SiteID = SiteId
 					AND PointLevelInfo.CurrencyId = CurrencyId
-					AND PointLevel.PointLevel = PointLevel);
+					AND PointLevelInfo.PointLevel = PointLevel);
 END
