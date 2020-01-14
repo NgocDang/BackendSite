@@ -36,6 +36,7 @@ namespace BackendSite.Service.BLL
         public bool EditPointLevel(PointLevelInfo pointLevelInfo)
         {
             var currentBelowPoint = marketingService.GetPointLevelInfo(pointLevelInfo.SiteId, pointLevelInfo.CurrencyId, pointLevelInfo.PointLevel - 1);
+            var currentUpperPoint = marketingService.GetPointLevelInfo(pointLevelInfo.SiteId, pointLevelInfo.CurrencyId, pointLevelInfo.PointLevel + 1);
 
             if (currentBelowPoint != null)
             {
@@ -45,6 +46,12 @@ namespace BackendSite.Service.BLL
             else
             {
                 if (pointLevelInfo.BetLeast <= 0 || pointLevelInfo.DepositLeast <= 0)
+                    return false;
+            }
+
+            if (currentUpperPoint != null)
+            {
+                if (pointLevelInfo.BetLeast >= currentUpperPoint.BetLeast || pointLevelInfo.DepositLeast >= currentUpperPoint.DepositLeast)
                     return false;
             }
 

@@ -4,12 +4,13 @@ import { render } from 'react-dom';
 import LoadingOverlay from 'react-loading-overlay';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
+import { number_format } from '../commJS/common';
 const Toastr = withReactContent(Swal);
 
 const showError = message => {
     Toastr.fire({
         icon: 'error',
-        title: 'Oops...',
+        title: i18n.lbl_Error,
         text: message,
         allowOutsideClick: false,
         animation: false,
@@ -19,28 +20,13 @@ const showError = message => {
 const showSuccess = message => {
     Toastr.fire({
         icon: 'success',
-        title: 'Success!',
+        title: i18n.lbl_Success,
         text: message,
         allowOutsideClick: false,
         animation: false,
         allowEnterKey: false
     });
 };
-const showConfirm = message => {
-    Toastr.fire({
-        title: "Are you sure?",
-        text: message,
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: 'red',
-        cancelButtonColor: 'blue',
-        confirmButtonText: 'OK'
-    }).then((result) => {
-        return result;
-    });
-
-    return false;
-}
 
 const DropdownSelection = ({ options, label, isLoading, onChange, value }) => {
     return (
@@ -133,11 +119,11 @@ class Popup extends React.Component {
                     <h1>{this.props.text}</h1>
                     <Form>
                         <Form.Field>
-                            <label>Point</label>
+                            <label>{i18n.lbl_Point}</label>
                             <input value={this.props.point} readOnly />
                         </Form.Field>
                         <Form.Field>
-                            <label>Deposit Least</label>
+                            <label>{i18n.lbl_DepositLeast}</label>
                             <input
                                 value={this.state.deposit}
                                 type="number"
@@ -145,25 +131,22 @@ class Popup extends React.Component {
                             />
                         </Form.Field>
                         <Form.Field>
-                            <label>Bet Least</label>
+                            <label>{i18n.lbl_BetLeast}</label>
                             <input
                                 value={this.state.bet}
                                 type="number"
                                 onChange={(event) => this.onChangeBetLeast(event)}
                             />
                         </Form.Field>
-                        <Button
-                            icon
-                            primary
-                            size='mini'
-                            onClick={this.onSave}
-                        > <Icon name='check' />Save</Button>
-                        <Button
-                            icon
-                            color="red"
-                            size='mini'
-                            onClick={this.props.closePopup}
-                        > <Icon name='cancel' />Cancel</Button>
+                        <button
+                            className="ui right floated primary button"
+                            onClick={this.onSave}>{i18n.lbl_Save}
+                        </button>
+                        <button
+                            className="ui right floated button"
+                            onClick={this.props.closePopup}>{i18n.lbl_Cancel}
+                        </button>
+                        <div className="clearfix" />
                     </Form>
                 </div>
             </div>
@@ -241,11 +224,11 @@ class EditableRow extends React.Component {
         const { isChanged, isEditing, deposit, bet } = this.state;
         return (
             <Table.Row className="point">
-                <Table.Cell>{this.props.rowData.pointLevel}</Table.Cell>
-                <Table.Cell>{!isEditing && deposit}{isEditing && <input type="number" onChange={e => this.onChangeValue({ target: { name: "deposit", value: parseInt(e.target.value) } })}
+                <Table.Cell className="text-center">{this.props.rowData.pointLevel}</Table.Cell>
+                <Table.Cell className="text-right">{!isEditing && number_format(deposit)}{isEditing && <input type="number" className="input-full" onChange={e => this.onChangeValue({ target: { name: "deposit", value: parseInt(e.target.value) } })}
                     value={deposit}
                 />}</Table.Cell>
-                <Table.Cell>{!isEditing && bet}{isEditing && <input type="number" onChange={e => this.onChangeValue({ target: { name: "bet", value: parseInt(e.target.value) } })}
+                <Table.Cell className="text-right">{!isEditing && number_format(bet)}{isEditing && <input type="number" className="input-full" onChange={e => this.onChangeValue({ target: { name: "bet", value: parseInt(e.target.value) } })}
                     value={bet}
                 />}</Table.Cell>
                 <Table.Cell>{!isEditing && <div><Button
@@ -333,13 +316,12 @@ class PointTable extends React.Component {
 
     onDeletePoint = async (point) => {
         Toastr.fire({
-            title: "Are you sure?",
-            text: "You won't be able to revert this!",
+            title: i18n.lbl_AreYouSure,
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: 'red',
             cancelButtonColor: 'blue',
-            confirmButtonText: 'OK'
+            confirmButtonText: i18n.lbl_OK
         }).then(async (result) => {
             if (result.value) {
                 const { points } = this.state;
@@ -392,7 +374,7 @@ class PointTable extends React.Component {
         const currentSecondMaxPointDeposit = currentMaxPoint > 0 ? points.filter(x => x.pointLevel === currentMaxPoint)[0].depositLeast : 0;
 
         return (
-            <div className="panel mt-20">
+            <div className="panel">
                 <a className="panel-title" data-toggle="collapse" href={"#collapseExample-" + this.props.currencyId} role="button" aria-expanded="true" aria-controls="collapseExample">
                     {i18n["lbl_Currency" + this.props.currencyId]}
                 </a>
@@ -403,13 +385,18 @@ class PointTable extends React.Component {
                             spinner
                         >
                             <div className="point-table" data-currency-id={this.props.currencyId}>
+                                <button
+                                    className="btn btn-add"
+                                    onClick={(e) => this.onClickOpenAddNewPopUp(e)}
+                                >{i18n.lbl_AddPointLevel}
+                                </button>
                                 <Table compact celled>
                                     <Table.Header>
                                         <Table.Row>
-                                            <Table.HeaderCell>Point</Table.HeaderCell>
-                                            <Table.HeaderCell>Deposit least</Table.HeaderCell>
-                                            <Table.HeaderCell>Bet least</Table.HeaderCell>
-                                            <Table.HeaderCell>Action</Table.HeaderCell>
+                                            <Table.HeaderCell className="width-100 text-center">{i18n.lbl_Point}</Table.HeaderCell>
+                                            <Table.HeaderCell>{i18n.lbl_DepositLeast}</Table.HeaderCell>
+                                            <Table.HeaderCell>{i18n.lbl_BetLeast}</Table.HeaderCell>
+                                            <Table.HeaderCell className="width-100">{i18n.lbl_Action}</Table.HeaderCell>
                                         </Table.Row>
                                     </Table.Header>
 
@@ -418,29 +405,12 @@ class PointTable extends React.Component {
                                             points.map(rowData => <EditableRow key={rowData.pointLevel} rowData={rowData} onDeletePoint={this.onDeletePoint} onSaveEditedRow={this.onSaveEditedRow} isDeletable={currentMaxPoint > 0 && currentMaxPoint === rowData.pointLevel} />)
                                         }
                                     </Table.Body>
-
-                                    <Table.Footer fullWidth>
-                                        <Table.Row>
-                                            <Table.HeaderCell colSpan='4'>
-                                                <Button
-                                                    floated='right'
-                                                    icon
-                                                    labelPosition='left'
-                                                    primary
-                                                    size='tiny'
-                                                    onClick={(e) => this.onClickOpenAddNewPopUp(e)}
-                                                >
-                                                    <Icon name='plus' /> Add level
-          </Button>
-                                            </Table.HeaderCell>
-                                        </Table.Row>
-                                    </Table.Footer>
                                 </Table>
                             </div>
                             {
                                 this.state.isAddNew ?
                                     <Popup
-                                        text="Add new point level"
+                                        text={i18n.lbl_AddNewPointLevel}
                                         closePopup={this.onClickOpenAddNewPopUp}
                                         siteId={this.props.siteId}
                                         point={currentMaxPoint + 1}
@@ -464,7 +434,7 @@ class PointLevelManagement extends React.Component {
         super(props);
         this.state = {
             sites: [],
-            isLoadingPoints: false,
+            isLoadingSite: false,
             selectedSite: null,
             currencyOptions: []
         }
@@ -472,6 +442,7 @@ class PointLevelManagement extends React.Component {
     }
 
     componentDidMount() {
+        this.setState({ isLoadingSite: true });
         axios.get('/api/Marketing/GetAllSites')
             .then(function (response) {
                 let result = response.data;
@@ -484,12 +455,13 @@ class PointLevelManagement extends React.Component {
                         rObj["text"] = info.siteName;
                         return rObj;
                     });
-                    this.setState({ sites: sites });
+                    this.setState({ sites: sites, isLoadingSite: false });
                 } else {
-                    alert(result.message);
+                    showError(result.message);
                 }
             }.bind(this)).catch(function (error) {
-                alert(error);
+                showError(error);
+                this.setState({ isLoadingSite: false });
             }.bind(this)).finally(function () {
             }.bind(this));
     }
@@ -518,19 +490,20 @@ class PointLevelManagement extends React.Component {
     }
 
     render() {
-        const { sites, selectedSite, currencyOptions } = this.state;
+        const { sites, selectedSite, currencyOptions, isLoadingSite } = this.state;
         return (
-            <div>
-                <div className="form-group">
-                    <Form.Field>
-                        <label>Select site</label>
-                        <DropdownSelection options={sites} label="Select site" onChange={this.onChangeSite} value={selectedSite} />
+            <div className="pt-15">
+                <div className="filter">
+                    <Form.Field className="input-item">
+                        <label className="label">{i18n.lbl_SelectSite}</label>
+                        <DropdownSelection options={sites} label="Select site" onChange={this.onChangeSite} value={selectedSite} isLoading={isLoadingSite} />
                     </Form.Field>
                 </div>
-
-                {selectedSite && (currencyOptions.map(option => <div key={option.value} className="form-group">
-                    <PointTable currencyId={option.value} siteId={selectedSite} />
-                </div>))}
+                <div className="panel-flex">
+                    {selectedSite && (currencyOptions.map(option => <div key={option.value} className="form-group">
+                        <PointTable currencyId={option.value} siteId={selectedSite} />
+                    </div>))}
+                </div>
             </div>
         );
     }

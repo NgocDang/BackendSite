@@ -5,7 +5,7 @@
     ViewData["Title"] = "Point level management";
 }
 <link href="~/css/main.css" rel="stylesheet" />
-<link href="~/css/marketing.css" rel="stylesheet" />
+<link href="~/css/page/Marketing.css" rel="stylesheet" asp-append-version="true" />
 @{
     var i18n = new Dictionary<string, string>();
 
@@ -13,6 +13,13 @@
     {
         if (!string.IsNullOrEmpty(selLangBLL.GetResourceValue($"Currency_{currency}")))
             i18n.Add($"lbl_Currency{currency}", selLangBLL.GetResourceValue($"Currency_{currency}"));
+    }
+
+    string[] lbl_Txts = new string[] { "lbl_Save", "lbl_Success", "lbl_Action", "lbl_SelectSite", "lbl_Point", "lbl_DepositLeast", "lbl_BetLeast", "lbl_AddPointLevel", "lbl_AddNewPointLevel", "lbl_Delete", "lbl_AreYouSure", "lbl_OK", "lbl_Cancel", "lbl_Error" };
+    foreach (var lbl_Txt in lbl_Txts)
+    {
+        if (!i18n.ContainsKey(lbl_Txt))
+            i18n.Add(lbl_Txt, selLangBLL.GetResourceValue(lbl_Txt));
     }
 }
 <div id="point-management">
