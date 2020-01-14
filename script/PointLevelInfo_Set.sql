@@ -9,10 +9,10 @@ BEGIN
 	# 20200111@Tyler(BackendSite): Edit PointLeveInfo
 	UPDATE PointLevelInfo 
 	SET 
-		PointLevelInfo.PointLevel = PointLevel,
         PointLevelInfo.BetLeast = BetLeast,
         PointLevelInfo.DepositLeast = DepositLeast
 	WHERE
 		PointLevelInfo.SiteId = SiteId
-			AND PointLevelInfo.CurrencyId = CurrencyId;
+			AND PointLevelInfo.CurrencyId = CurrencyId
+			AND PointLevelInfo.PointLevel = PointLevel;
 END
