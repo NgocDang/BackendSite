@@ -27,7 +27,7 @@
     "calendar": "^0.1.1",
     "install": "^0.13.0",
     "moment": "^2.24.0",
-    "npm": "^6.13.6",
+    "npm": "^6.14.6",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-loading-overlay": "^1.0.1",
